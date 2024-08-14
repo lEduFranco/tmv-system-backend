@@ -20,6 +20,16 @@ class UsersRepository implements IUsersRepository {
     return user
   }
 
+  async findById(id: string): Promise<User> {
+    const user = await this.repository.findFirst({
+      where: {
+        id,
+      },
+    })
+
+    return user
+  }
+
   public async create({
     email,
     name,
