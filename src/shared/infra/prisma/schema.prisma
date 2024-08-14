@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,13 +7,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  admin
+  provider
+  client
+  staff
+}
+
 model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  password      String
+  phoneNumber   String
+  avatarUrl     String?  
+  role          Role
+  clientId      String?  @unique
+  providerId    String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userTokens    UserTokens[]
+  providerAppointments Appointments[] @relation("ProviderAppointments")
+  clientAppointments   Appointments[] @relation("ClientAppointments")
+  addresses      Address[]
+  
+  @@map("users")
+}
+
+model UserTokens {
   id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
+  token     String   @unique
+  userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("users")
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Appointments {
+  id         String   @id @default(uuid())
+  date       DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  providerId String
+  clientId   String
+
+  provider   User     @relation("ProviderAppointments", fields: [providerId], references: [id])
+  client     User     @relation("ClientAppointments", fields: [clientId], references: [id])
+}
+
+model Address {
+  id        String   @id @default(uuid())
+  street    String
+  city      String
+  state     String
+  zipCode   String
+  country   String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id])
 }

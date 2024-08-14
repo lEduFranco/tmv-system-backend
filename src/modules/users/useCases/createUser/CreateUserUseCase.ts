@@ -1,15 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { inject, injectable } from 'tsyringe'
 
-import { User } from '@modules/users/models/User'
+import { Role, User } from '@modules/users/models/User'
 import { IHashProvider } from '@modules/users/providers/HashProvider/IHashProvider'
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
 import { AppError } from '@shared/errors/AppError'
+import { v4 as uuid } from 'uuid'
 
 interface IRequest {
   name: string
   email: string
   password: string
+  role: Role
+  phoneNumber: string
+  avatarUrl?: string
 }
 
 @injectable()
@@ -22,7 +26,14 @@ class CreateUserUseCase {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ email, name, password }: IRequest): Promise<User> {
+  public async execute({
+    email,
+    name,
+    password,
+    phoneNumber,
+    role,
+    avatarUrl,
+  }: IRequest): Promise<User> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email)
 
     if (userAlreadyExists) {
@@ -34,6 +45,11 @@ class CreateUserUseCase {
     const payloadUser = {
       email,
       name,
+      phoneNumber,
+      role,
+      avatarUrl,
+      clientId: role.includes('client') ? uuid() : null,
+      proderId: role.includes('provider') ? uuid() : null,
       password: hashPassword,
     }
 

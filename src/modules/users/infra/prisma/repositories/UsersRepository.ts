@@ -24,16 +24,18 @@ class UsersRepository implements IUsersRepository {
     email,
     name,
     password,
-    phone,
-    tenantId,
+    phoneNumber,
+    role,
+    avatarUrl,
   }: ICreateUserDTO): Promise<User> {
     const user = await this.repository.create({
       data: {
         email,
         name,
         password,
-        phone,
-        tenantId,
+        phoneNumber,
+        role,
+        avatarUrl,
       },
     })
 
