@@ -3,11 +3,13 @@ import { Router } from 'express'
 
 import { CreateUserController } from '@modules/users/useCases/createUser/CreateUserController'
 import { GetUserByIdController } from '@modules/users/useCases/getUserById/getUserByIdController'
+import { DeleteUserController } from '@modules/users/useCases/deleteUser/deleteUserController'
 
 const usersRoutes = Router()
 
 const createUserController = new CreateUserController()
 const getUserByIdController = new GetUserByIdController()
+const deleteUserController = new DeleteUserController()
 
 usersRoutes.post(
   '/',
@@ -32,6 +34,16 @@ usersRoutes.get(
     },
   }),
   getUserByIdController.handle,
+)
+
+usersRoutes.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  deleteUserController.handle,
 )
 
 export { usersRoutes }
