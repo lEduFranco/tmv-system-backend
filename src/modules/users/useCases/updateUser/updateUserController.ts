@@ -2,18 +2,18 @@ import { Response, Request } from "express";
 import { container } from "tsyringe";
 import { classToClass } from "class-transformer";
 
-import { DeleteUserUseCase } from "./deleteUserUseCase";
+import { UpdateUserUseCase } from "./updateUserUseCase";
 
-class DeleteUserController {
+class UpdateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteUser = container.resolve(DeleteUserUseCase);
+    const updateUser = container.resolve(UpdateUserController);
 
-    const user = await deleteUser.execute({ id });
+    const user = await updateUser.execute({ id });
 
     return response.json(classToClass(user));
   }
 }
 
-export { DeleteUserController };
+export { UpdateUserController };
