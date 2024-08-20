@@ -35,4 +35,3 @@ class DeleteUserUseCase {
 }
 
 export { DeleteUserUseCase };
-export { IResponse };
