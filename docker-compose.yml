@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   tomaisvip_ceub:
     image: postgres
