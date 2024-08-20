@@ -1,36 +1,36 @@
-import { inject, injectable } from "tsyringe";
+import { inject, injectable } from 'tsyringe'
 
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
+import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
+import { AppError } from '@shared/errors/AppError'
+import { Role, User } from '@modules/users/models/User'
 
 interface IRequest {
-  id: string;
-}
-
-interface IResponse {
-  message: string;
+  id: string
+  name: string
+  email: string
+  phoneNumber: string
+  avatarUrl: string
+  role: Role
 }
 
 @injectable()
 class UpdateUserUseCase {
   constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({ id }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findById(id);
+  public async execute(data: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(data.id)
 
     if (!user) {
-      throw new AppError("User not found", 404);
+      throw new AppError('User not found', 404)
     }
 
-    await this.usersRepository.put(id);
+    const newUser = await this.usersRepository.update({ ...user, ...data })
 
-    return {
-      message: "Atualizado com sucesso!",
-    };
+    return newUser
   }
 }
 
-export { UpdateUserUseCase };
+export { UpdateUserUseCase }
