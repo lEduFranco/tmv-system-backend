@@ -8,7 +8,7 @@ interface IUpdateUserDTO {
   phoneNumber: string
   avatarUrl?: string
   clientId?: string
-  proderId?: string
+  providerId?: string
 }
 
 export { IUpdateUserDTO }
