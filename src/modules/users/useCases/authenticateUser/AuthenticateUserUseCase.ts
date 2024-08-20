@@ -50,7 +50,8 @@ class AuthenticateUserUseCase {
     const token = sign(
       {
         email: user.email,
-        tenantId: user.tenantId,
+        name: user.name,
+        role: user.role,
       },
       secretToken,
       {
@@ -61,10 +62,7 @@ class AuthenticateUserUseCase {
 
     const tokenReturn: IResponse = {
       token,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
+      user,
     }
 
     return tokenReturn

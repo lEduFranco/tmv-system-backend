@@ -5,6 +5,7 @@ import { CreateUserController } from '@modules/users/useCases/createUser/CreateU
 import { GetUserByIdController } from '@modules/users/useCases/getUserById/getUserByIdController'
 import { DeleteUserController } from '@modules/users/useCases/deleteUser/deleteUserController'
 import { UpdateUserController } from '@modules/users/useCases/updateUser/updateUserController'
+import { AuthenticateUserController } from '@modules/users/useCases/authenticateUser/AuthenticateUserController'
 
 const usersRoutes = Router()
 
@@ -12,6 +13,7 @@ const createUserController = new CreateUserController()
 const getUserByIdController = new GetUserByIdController()
 const deleteUserController = new DeleteUserController()
 const updateUserController = new UpdateUserController()
+const authenticateUserController = new AuthenticateUserController()
 
 usersRoutes.post(
   '/',
@@ -63,6 +65,17 @@ usersRoutes.put(
     },
   }),
   updateUserController.handle,
+)
+
+usersRoutes.post(
+  '/auth',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  authenticateUserController.handle,
 )
 
 export { usersRoutes }
