@@ -53,8 +53,8 @@ model Appointments {
   providerId String
   clientId   String
 
-  provider   User     @relation("ProviderAppointments", fields: [providerId], references: [id])
-  client     User     @relation("ClientAppointments", fields: [clientId], references: [id])
+  provider   User     @relation("ProviderAppointments", fields: [providerId], references: [providerId])
+  client     User     @relation("ClientAppointments", fields: [clientId], references: [clientId])
 }
 
 model Address {
