@@ -38,6 +38,8 @@ class UsersRepository implements IUsersRepository {
     phoneNumber,
     role,
     avatarUrl,
+    clientId,
+    providerId,
   }: ICreateUserDTO): Promise<User> {
     const user = await this.repository.create({
       data: {
@@ -47,6 +49,8 @@ class UsersRepository implements IUsersRepository {
         phoneNumber,
         role,
         avatarUrl,
+        clientId,
+        providerId,
       },
     })
 

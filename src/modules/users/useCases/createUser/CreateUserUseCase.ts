@@ -49,7 +49,7 @@ class CreateUserUseCase {
       role,
       avatarUrl,
       clientId: role.includes('client') ? uuid() : null,
-      proderId: role.includes('provider') ? uuid() : null,
+      providerId: role.includes('provider') ? uuid() : null,
       password: hashPassword,
     }
 
