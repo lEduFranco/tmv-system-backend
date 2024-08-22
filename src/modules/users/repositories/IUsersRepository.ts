@@ -6,6 +6,7 @@ interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<User>
   findByEmail(email: string): Promise<User>
   findById(id: string): Promise<User | undefined>
+  findAll(): Promise<User[]>
   delete(id: string): Promise<User | undefined>
   update(data: IUpdateUserDTO): Promise<User | undefined>
 }

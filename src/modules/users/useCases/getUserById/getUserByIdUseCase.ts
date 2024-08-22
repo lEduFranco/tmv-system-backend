@@ -1,31 +1,30 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { inject, injectable } from "tsyringe";
+import { inject, injectable } from 'tsyringe'
 
-import { User } from "@modules/users/models/User";
+import { User } from '@modules/users/models/User'
 
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { AppError } from "@shared/errors/AppError";
+import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
+import { AppError } from '@shared/errors/AppError'
 
 interface IRequest {
-  id: string;
+  id: string
 }
 
 @injectable()
 class GetUserByIdUseCase {
   constructor(
-    @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
   ) {}
 
   public async execute({ id }: IRequest): Promise<User> {
-    const user = await this.usersRepository.findById(id);
+    const user = await this.usersRepository.findById(id)
 
     if (!user) {
-      throw new AppError("User not found", 404);
+      throw new AppError('User not found', 404)
     }
 
-    return user;
+    return user
   }
 }
 
-export { GetUserByIdUseCase };
+export { GetUserByIdUseCase }
