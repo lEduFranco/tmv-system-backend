@@ -1,7 +1,5 @@
 import { container } from 'tsyringe'
 
-import '@shared/container/providers'
-
 import { UsersRepository } from '@modules/users/infra/prisma/repositories/UsersRepository'
 import { IHashProvider } from '@modules/users/providers/HashProvider/IHashProvider'
 import { BCryptHashProvider } from '@modules/users/providers/HashProvider/implementations/BCryptHashProvider'
