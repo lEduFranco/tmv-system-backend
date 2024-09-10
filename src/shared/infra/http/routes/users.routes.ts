@@ -32,10 +32,10 @@ usersRoutes.post(
   createUserController.handle,
 )
 
-usersRoutes.get('/', getAllUsersController.handle)
+usersRoutes.get('/all', getAllUsersController.handle)
 
 usersRoutes.get(
-  '/:id',
+  'find-by-id/:id',
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
