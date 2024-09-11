@@ -1,30 +1,30 @@
 import { inject, injectable } from 'tsyringe'
 
-import { User } from '@modules/users/models/User'
+import { Role, User } from '@modules/users/models/User'
 
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
 import { AppError } from '@shared/errors/AppError'
 
 interface IRequest {
-  id: string
+  role: Role
 }
 
 @injectable()
-class GetUserByIdUseCase {
+class GetUserByRoleUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({ id }: IRequest): Promise<User> {
-    const user = await this.usersRepository.findById(id)
+  public async execute({ role }: IRequest): Promise<User[]> {
+    const users = await this.usersRepository.findByRole(role)
 
-    if (!user) {
+    if (!users) {
       throw new AppError('User not found', 404)
     }
 
-    return user
+    return users
   }
 }
 
-export { GetUserByIdUseCase }
+export { GetUserByRoleUseCase }

@@ -1,12 +1,13 @@
 {
-  "name": "tributario",
+  "name": "tmv-system",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
-    "studio": "yarn prisma studio",
-    "migrate": "yarn prisma migrate dev",
+    "studio": "npx prisma studio",
+    "migrate": "npx prisma migrate dev",
+    "migrate:production": "npx prisma migrate deploy",
+    "start": "ts-node-dev -r tsconfig-paths/register --exit-child --inspect --respawn --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register --exit-child --inspect --respawn --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts"
   },
   "dependencies": {
