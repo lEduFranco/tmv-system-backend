@@ -1,6 +1,6 @@
 import { ICreateUserDTO } from '@modules/users/dtos/ICreateUserDTO'
 import { IUpdateUserDTO } from '@modules/users/dtos/IUpdateUserDTO'
-import { User } from '@modules/users/models/User'
+import { Role, User } from '@modules/users/models/User'
 import { IUsersRepository } from '@modules/users/repositories/IUsersRepository'
 import { prisma } from '@shared/infra/prisma'
 
@@ -29,6 +29,16 @@ class UsersRepository implements IUsersRepository {
     })
 
     return user
+  }
+
+  async findByRole(role: Role): Promise<User[]> {
+    const users = await this.repository.findMany({
+      where: {
+        role,
+      },
+    })
+
+    return users
   }
 
   async findAll(): Promise<User[]> {
