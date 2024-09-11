@@ -1,8 +1,8 @@
-import { Response, Request } from "express";
-import { container } from "tsyringe";
-import { classToClass } from "class-transformer";
+import { Response, Request } from 'express'
+import { container } from 'tsyringe'
+import { classToClass } from 'class-transformer'
 
-import { UpdateAppointmentsUseCase } from "./updateAppointmentsUseCase";
+import { UpdateAppointmentsUseCase } from './updateAppointmentsUseCase'
 
 class UpdateAppointmentsController {
   async handle(request: Request, response: Response): Promise<Response> {

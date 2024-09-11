@@ -1,8 +1,8 @@
-import { inject, injectable } from "tsyringe";
+import { inject, injectable } from 'tsyringe'
 
-import { IAppointmentsRepository } from "@modules/appointments/repositories/IAppointmentsRepository";
+import { IAppointmentsRepository } from '@modules/appointments/repositories/IAppointmentsRepository'
 
-import { AppError } from "@shared/errors/AppError";
+import { AppError } from '@shared/errors/AppError'
 
 interface IRequest {
   id: string
@@ -16,8 +16,8 @@ interface IResponse {
 class DeleteAppointmentUseCase {
   constructor(
     @inject('AppointmentsRepository')
-    private appointmentRepository: IAppointmentsRepository
-  )
+    private appointmentRepository: IAppointmentsRepository,
+  ) {}
 
   public async execute({ id }: IRequest): Promise<IResponse> {
     const appointment = await this.appointmentRepository.findById(id)
@@ -29,7 +29,7 @@ class DeleteAppointmentUseCase {
     await this.appointmentRepository.delete(id)
 
     return {
-      message: "Deletado com sucesso!"
+      message: 'Deletado com sucesso!',
     }
   }
 }
