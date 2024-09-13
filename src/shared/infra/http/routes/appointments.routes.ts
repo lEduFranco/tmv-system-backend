@@ -5,6 +5,8 @@ import { GetAppointmentsByIdController } from '@modules/appointments/useCases/ge
 import { UpdateAppointmentsController } from '@modules/appointments/useCases/updateAppointment/updateAppointmentsController'
 import { DeleteAppointmentController } from '@modules/appointments/useCases/deleteAppointment/deleteAppointmentController'
 import { GetCountAppointmentsController } from '@modules/appointments/useCases/getCountAppointments/getCountAppointmentsController'
+import { GetAppointmentsByDateController } from '@modules/appointments/useCases/getAppointmentsByDate/getAppointmentsByDateController'
+
 const appointmentsRoutes = Router()
 
 const createAppointmentController = new CreateAppointmentController()
@@ -12,6 +14,7 @@ const getAppointmentsByIdController = new GetAppointmentsByIdController()
 const updateAppointmentsController = new UpdateAppointmentsController()
 const deleteAppointmentController = new DeleteAppointmentController()
 const getCountAppointmentsController = new GetCountAppointmentsController()
+const getAppointmentsByDateController = new GetAppointmentsByDateController()
 
 appointmentsRoutes.post(
   '/',
@@ -26,7 +29,7 @@ appointmentsRoutes.post(
 )
 
 appointmentsRoutes.get(
-  '/:id',
+  '/find-by-id/:id',
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
@@ -36,6 +39,16 @@ appointmentsRoutes.get(
 )
 
 appointmentsRoutes.get('/count', getCountAppointmentsController.handle)
+
+appointmentsRoutes.get(
+  '/find-by-date',
+  celebrate({
+    [Segments.QUERY]: {
+      date: Joi.string().required(),
+    },
+  }),
+  getAppointmentsByDateController.handle,
+)
 
 appointmentsRoutes.put(
   '/:id',

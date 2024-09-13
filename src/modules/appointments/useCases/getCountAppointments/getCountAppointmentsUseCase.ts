@@ -9,6 +9,8 @@ import {
   endOfMonth,
   startOfYear,
   endOfYear,
+  startOfDay,
+  addHours,
 } from 'date-fns'
 
 interface IResponse {
@@ -26,8 +28,13 @@ class GetCountAppointmentsUseCase {
   ) {}
 
   public async execute(): Promise<IResponse> {
+    const startOfDayDate = startOfDay(new Date())
+    const endOfDayDate = addHours(startOfDayDate, 24)
     const countAppointmentsToday =
-      await this.appointmentsRepository.countByDateRange(new Date(), new Date())
+      await this.appointmentsRepository.countByDateRange(
+        startOfDayDate,
+        endOfDayDate,
+      )
 
     const startOfWeekDate = startOfWeek(new Date())
     const endOfWeekDate = endOfWeek(new Date())

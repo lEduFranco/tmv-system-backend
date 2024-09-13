@@ -36,6 +36,37 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointments
   }
 
+  public async findByDate(
+    date: Date,
+    providerId?: string,
+  ): Promise<Appointments[]> {
+    const where = {
+      date,
+    }
+
+    if (providerId) {
+      Object.assign(where, { providerId })
+    }
+
+    const appointments = await this.repository.findMany({
+      where,
+      include: {
+        client: {
+          include: {
+            addresses: true,
+          },
+        },
+        provider: {
+          include: {
+            addresses: true,
+          },
+        },
+      },
+    })
+
+    return appointments
+  }
+
   public async create({
     date,
     providerId,

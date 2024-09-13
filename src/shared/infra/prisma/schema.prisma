@@ -43,6 +43,8 @@ model UserTokens {
   updatedAt DateTime @updatedAt
 
   user      User     @relation(fields: [userId], references: [id])
+
+  @@map("users_tokens")
 }
 
 model Appointments {
@@ -55,6 +57,8 @@ model Appointments {
 
   provider   User     @relation("ProviderAppointments", fields: [providerId], references: [providerId])
   client     User     @relation("ClientAppointments", fields: [clientId], references: [clientId])
+  
+  @@map("appointments")
 }
 
 model Address {
@@ -69,4 +73,6 @@ model Address {
   updatedAt DateTime @updatedAt
 
   user      User     @relation(fields: [userId], references: [id])
+
+  @@map("address")
 }
