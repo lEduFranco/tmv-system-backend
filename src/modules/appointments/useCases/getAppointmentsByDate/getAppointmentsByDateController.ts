@@ -7,11 +7,11 @@ class GetAppointmentsByDateController {
   async handle(request: Request, response: Response): Promise<Response> {
     const date: string = request.query.date as string
 
-    const getAppointmentsByIdUseCase = container.resolve(
+    const getAppointmentsByDateUseCase = container.resolve(
       GetAppointmentsByDateUseCase,
     )
 
-    const appointments = await getAppointmentsByIdUseCase.execute({ date })
+    const appointments = await getAppointmentsByDateUseCase.execute({ date })
 
     return response.json(classToClass(appointments))
   }
