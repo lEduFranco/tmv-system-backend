@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "studio": "npx prisma studio",
     "migrate": "npx prisma migrate dev",
     "migrate:production": "npx prisma migrate deploy",
-    "start": "ts-node-dev -r tsconfig-paths/register --exit-child --inspect --respawn --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+    "start": "node dist/shared/infra/http/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --exit-child --inspect --respawn --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts"
   },
   "dependencies": {
