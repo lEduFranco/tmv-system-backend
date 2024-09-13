@@ -6,6 +6,7 @@ interface IAppointmentsRepository {
   findById(id: string): Promise<Appointments | undefined>
   delete(id: string): Promise<Appointments | undefined>
   update(id: string, data: Partial<Appointments>): Promise<Appointments>
+  countByDateRange(startDate: Date, endDate: Date): Promise<number>
 }
 
 export { IAppointmentsRepository }

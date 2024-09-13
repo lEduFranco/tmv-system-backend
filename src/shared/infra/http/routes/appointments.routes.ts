@@ -1,16 +1,17 @@
 import { Router } from 'express'
 import { celebrate, Segments, Joi } from 'celebrate'
-import { CreateAppointmentController } from '@modules/appointments/userCases/createAppointment/createAppointmentController'
-import { GetAppointmentsByIdController } from '@modules/appointments/userCases/getAppointments/getAppointmentsController'
-import { UpdateAppointmentsController } from '@modules/appointments/userCases/updateAppointment/updateAppointmentsController'
-import { DeleteAppointmentController } from '@modules/appointments/userCases/deleteAppointment/deleteAppointmentController'
-
+import { CreateAppointmentController } from '@modules/appointments/useCases/createAppointment/createAppointmentController'
+import { GetAppointmentsByIdController } from '@modules/appointments/useCases/getAppointments/getAppointmentsController'
+import { UpdateAppointmentsController } from '@modules/appointments/useCases/updateAppointment/updateAppointmentsController'
+import { DeleteAppointmentController } from '@modules/appointments/useCases/deleteAppointment/deleteAppointmentController'
+import { GetCountAppointmentsController } from '@modules/appointments/useCases/getCountAppointments/getCountAppointmentsController'
 const appointmentsRoutes = Router()
 
 const createAppointmentController = new CreateAppointmentController()
 const getAppointmentsByIdController = new GetAppointmentsByIdController()
 const updateAppointmentsController = new UpdateAppointmentsController()
 const deleteAppointmentController = new DeleteAppointmentController()
+const getCountAppointmentsController = new GetCountAppointmentsController()
 
 appointmentsRoutes.post(
   '/',
@@ -33,6 +34,8 @@ appointmentsRoutes.get(
   }),
   getAppointmentsByIdController.handle,
 )
+
+appointmentsRoutes.get('/count', getCountAppointmentsController.handle)
 
 appointmentsRoutes.put(
   '/:id',

@@ -20,6 +20,22 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointment
   }
 
+  public async countByDateRange(
+    startDate: Date,
+    endDate: Date,
+  ): Promise<number> {
+    const appointments = await this.repository.count({
+      where: {
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+    })
+
+    return appointments
+  }
+
   public async create({
     date,
     providerId,
