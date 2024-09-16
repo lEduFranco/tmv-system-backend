@@ -19,20 +19,7 @@ const authenticateUserController = new AuthenticateUserController()
 const getAllUsersController = new GetAllUsersController()
 const getUserByRoleController = new GetUserByRoleController()
 
-usersRoutes.post(
-  '/',
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().email().required(),
-      name: Joi.string().required(),
-      password: Joi.string().required(),
-      phoneNumber: Joi.string().required(),
-      avatarUrl: Joi.string(),
-      role: Joi.string().required().default('admin'),
-    },
-  }),
-  createUserController.handle,
-)
+usersRoutes.post('/', createUserController.handle)
 
 usersRoutes.get('/all', getAllUsersController.handle)
 
@@ -76,7 +63,7 @@ usersRoutes.put(
       email: Joi.string().email().required(),
       name: Joi.string().required(),
       phoneNumber: Joi.string().required(),
-      avatarUrl: Joi.string(),
+      avatarUrl: Joi.string().allow(null),
       role: Joi.string().required().default('admin'),
     },
   }),

@@ -2,10 +2,11 @@ import { inject, injectable } from 'tsyringe'
 import { AppError } from '@shared/errors/AppError'
 import { Appointments } from '@modules/appointments/models/Appointments'
 import { IAppointmentsRepository } from '@modules/appointments/repositories/IAppointmentsRepository'
+import { parseISO } from 'date-fns'
 
 interface IRequest {
   id: string
-  date: Date
+  date: string
   providerId: string
   clientId: string
 }
@@ -21,13 +22,19 @@ class UpdateAppointmentsUseCase {
     const appointment = await this.appointmentsRepository.findById(data.id)
 
     if (!appointment) {
-      throw new AppError('User not found', 404)
+      throw new AppError('Appointment not found', 404)
     }
 
-    const newAppointment = await this.appointmentsRepository.update(
-      data.id,
-      data,
-    )
+    const payload = {
+      date: parseISO(data.date),
+      providerId: data.providerId,
+      clientId: data.clientId,
+    }
+
+    const newAppointment = await this.appointmentsRepository.update(data.id, {
+      ...appointment,
+      ...payload,
+    })
 
     return newAppointment
   }

@@ -36,6 +36,9 @@ class UsersRepository implements IUsersRepository {
       where: {
         role,
       },
+      include: {
+        addresses: true,
+      },
     })
 
     return users
@@ -68,6 +71,9 @@ class UsersRepository implements IUsersRepository {
         clientId,
         providerId,
       },
+      include: {
+        addresses: true,
+      },
     })
 
     return user
@@ -83,19 +89,10 @@ class UsersRepository implements IUsersRepository {
     return user
   }
 
-  public async update({
-    id,
-    name,
-    email,
-    role,
-    phoneNumber,
-    avatarUrl,
-    clientId,
-    providerId,
-  }: IUpdateUserDTO): Promise<User> {
+  public async update(data: IUpdateUserDTO): Promise<User> {
     const user = await this.repository.update({
-      where: { id },
-      data: { name, email, role, phoneNumber, avatarUrl, clientId, providerId },
+      where: { id: data.id },
+      data,
     })
 
     return user
